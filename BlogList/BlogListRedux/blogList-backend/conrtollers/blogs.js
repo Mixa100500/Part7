@@ -1,9 +1,14 @@
 const blogsRouter = require('express').Router()
 const Blog = require('../moduls/blog')
 
+const compareLikes = (a, b) => {
+  return b.likes - a.likes;
+}
+
 blogsRouter.get('/', async (request, response) => {
   const result = await Blog.find({}).populate('user', {username: 1, name: 1})
-  response.json(result)
+  const sortedResult = result.sort(compareLikes);
+  response.json(sortedResult);
 })
 
 blogsRouter.get('/:id', async (request, response) => {
