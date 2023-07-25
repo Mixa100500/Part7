@@ -1,5 +1,6 @@
 const blogsRouter = require('express').Router()
 const Blog = require('../moduls/blog')
+const Comment = require('../moduls/comments')
 
 const compareLikes = (a, b) => {
   return b.likes - a.likes;
@@ -18,6 +19,28 @@ blogsRouter.get('/:id', async (request, response) => {
   } else {
     response.status(404).end()
   }
+})
+
+blogsRouter.get('/:id/comments', async (request, response) => {
+  const { comments: ids } = await Blog.findById(request.params.id)
+  const comments = await Comment.find({ _id: ids })
+  console.log(ids)
+  response.json(comments)
+})
+
+blogsRouter.post('/:id/comments', async (request, response) => {
+  const { content, id } = request.body
+  const blog = await Blog.findById(id)
+  const comment = new Comment({
+    content,
+  })
+
+  comment.blog = blog._id
+  const createdComment = await comment.save()
+ 
+  blog.comments = blog.comments.concat(createdComment._id)
+  await blog.save()
+  response.status(201).json(createdComment)
 })
 
 blogsRouter.delete('/:id', async (request, response) => {
@@ -52,7 +75,6 @@ blogsRouter.post('/', async (request, response) => {
     const blog = new Blog({
       title: body.title,
       author: body.author,
-      user: user.id,
       url: body.url,
       likes: body.likes || 0
     })
@@ -83,7 +105,9 @@ blogsRouter.put('/:id', async (request, response) => {
   }
 
   if (body.user === user.id.toString()) {
-    const updateBlog = await Blog.findByIdAndUpdate(request.params.id, blog, { new: true }).populate('user', {username: 1, name: 1})
+    const updateBlog = await Blog.findByIdAndUpdate(
+      request.params.id, blog, { new: true })
+      .populate('user', {username: 1, name: 1})
     return response.json(updateBlog)
   }
   response

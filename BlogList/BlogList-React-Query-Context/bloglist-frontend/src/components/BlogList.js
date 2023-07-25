@@ -1,19 +1,17 @@
-import { useUser } from '../contexts/UserContext'
-import { useLike, useRemove } from '../hooks/BlogButton'
-import Blog from './Blog'
+import { Link } from 'react-router-dom'
+
+const itemStyle = {
+  paddingTop: 10,
+  paddingLeft: 2,
+  border: 'solid',
+  borderWidth: 1,
+  marginBottom: 5
+}
 
 export const BlogList = ({ blogs }) => {
-  const remove = useRemove()
-  const like = useLike()
-  const user = useUser()
-
   return blogs.map(blog =>
-    <Blog
-      canRemove={user && user.username === blog.user.username}
-      key={blog.id}
-      remove={() => remove(blog)}
-      blog={blog}
-      like={() => { like(blog) }}
-    />
+    <div key={blog.id} style={itemStyle}>
+      <Link to={`/blogs/${blog.id}`}>{blog.title}</Link>
+    </div>
   )
 }

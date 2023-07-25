@@ -8,7 +8,7 @@ export const TogglableBlogForm = () => {
   const createBlog = useCreateBlog(blogFormRef)
 
   return (
-    <Togglable buttonLabel='create a new Blog' ref={blogFormRef}>
+    <Togglable buttonLabel='create new' ref={blogFormRef}>
       <BlogForm
         createBlog={createBlog}
       />
