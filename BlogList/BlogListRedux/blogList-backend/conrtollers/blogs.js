@@ -24,13 +24,12 @@ blogsRouter.get('/:id', async (request, response) => {
 blogsRouter.get('/:id/comments', async (request, response) => {
   const { comments: ids } = await Blog.findById(request.params.id)
   const comments = await Comment.find({ _id: ids })
-  console.log(ids)
   response.json(comments)
 })
 
 blogsRouter.post('/:id/comments', async (request, response) => {
-  const { content, id } = request.body
-  const blog = await Blog.findById(id)
+  const { content } = request.body
+  const blog = await Blog.findById(request.params.id)
   const comment = new Comment({
     content,
   })

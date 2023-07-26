@@ -1,24 +1,25 @@
 import { useQuery } from 'react-query'
 import { useParams } from 'react-router-dom'
 import blogsService from '../../services/blogs'
-import { useLike, useRemove } from '../../hooks/BlogButton'
+import { useLikeBlog, useRemoveBlog } from '../../hooks/BlogButton'
 import { useUser } from '../../contexts/UserContext'
 import CommentsList from '../CommentsList'
+
 const Blog = () => {
   const { id } = useParams()
 
   const blogsQuery = useQuery('blogs', () => blogsService.getAll(id), {
     refetchOnWindowFocus: false
   })
-  const like = useLike()
-  const remove = useRemove()
+  const like = useLikeBlog()
+  const remove = useRemoveBlog()
   const user = useUser()
 
-  if (blogsQuery.status === 'loading') {
+  if (blogsQuery.isLoading) {
     return <div>Loading data...</div>
   }
 
-  if (blogsQuery.status === 'error') {
+  if (blogsQuery.isError) {
     return <div>Error loading data. Please try again later.</div>
   }
   const blogs = blogsQuery.data

@@ -1,7 +1,7 @@
 import { useErrorWith, useNotifyWith } from '../contexts/NotificationContext'
 import { useDeleteBlogMutation, useNewBlogMutation, useUpdateBlogMutation } from './queryMutation/BlogMutation'
 
-export const useRemove = () => {
+export const useRemoveBlog = () => {
   const notifyWith = useNotifyWith()
   const deleteBlogMutation = useDeleteBlogMutation()
 
@@ -34,7 +34,7 @@ export const useCreateBlog = (blogFormRef) => {
   return createBlog
 }
 
-export const useLike = () => {
+export const useLikeBlog = () => {
   const updateBlogMutation = useUpdateBlogMutation()
   const notifyWith = useNotifyWith()
   const errorWith = useErrorWith()

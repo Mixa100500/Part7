@@ -1,6 +1,7 @@
 import { useQuery } from 'react-query'
 import commentsService from '../services/comments'
 import { useParams } from 'react-router-dom'
+import { CommentBlogForm } from './CommentBlogForm'
 
 const CommentsList = () => {
   const { id } = useParams()
@@ -22,6 +23,7 @@ const CommentsList = () => {
   return (
     <>
       <h3>comments</h3>
+      <CommentBlogForm blogId={id} />
       <ul>
         {comments.map(c =>
           <li key={c.id}>

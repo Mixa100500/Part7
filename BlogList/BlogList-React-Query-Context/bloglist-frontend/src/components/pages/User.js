@@ -9,29 +9,30 @@ const User = () => {
     refetchOnWindowFocus: false
   })
 
-  if (usersQuery.status === 'loading') {
+  if (usersQuery.isLoading) {
     return <div>Loading data...</div>
   }
 
-  if (usersQuery.status === 'error') {
+  if (usersQuery.isError) {
     return <div>Error loading data. Please try again later.</div>
   }
   const users = usersQuery.data
-  if(!users) {
-    return null
-  }
   const user = users.find(a => a.id === id)
 
   return (
     <div>
       <h2>{user.name}</h2>
       <h3>added blogs</h3>
-      <ul>
-        {user.blogs.map(b => <li key={b.id}>
-          {b.title}
-        </li>
-        )}
-      </ul>
+      {user.blogs.length > 0 ? (
+        <ul>
+          {user.blogs.map(b => <li key={b.id}>
+            {b.title}
+          </li>
+          )}
+        </ul>
+      ) :
+        <p>This user has not added any blogs yet.</p>
+      }
     </div>
   )
 }
