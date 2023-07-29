@@ -45,7 +45,7 @@ const Blog = () => {
           </button>}
         </div>
         <div>added by {blog.author}</div>
-        {canChange &&<button onClick={remove}>
+        {canChange &&<button onClick={() => remove(blog)}>
           delete
         </button>}
       </div>

@@ -1,0 +1,15 @@
+/* index.css */
+
+/* Set the custom CSS variables for the Bootstrap theme */
+:root {
+  --primary: #007bff; /* Primary color */
+  --secondary: #6c757d; /* Secondary color */
+  --dark: #343a40; /* Dark color for dark theme */
+  --light: #f8f9fa; /* Light color for dark theme */
+  --body-bg: var(--dark); /* Dark background color */
+  --body-color: var(--light); /* Light text color */
+}
+body {
+  background-color: var(--background-color);
+  color: var(--text-color);
+}

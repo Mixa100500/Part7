@@ -1,17 +1,18 @@
+import { ListGroup, ListGroupItem } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 
-const itemStyle = {
-  paddingTop: 10,
-  paddingLeft: 2,
-  border: 'solid',
-  borderWidth: 1,
-  marginBottom: 5
-}
-
 export const BlogList = ({ blogs }) => {
-  return blogs.map(blog =>
-    <div key={blog.id} style={itemStyle}>
-      <Link to={`/blogs/${blog.id}`}>{blog.title}</Link>
-    </div>
+  if(blogs.length <= 0) {
+    return null
+  }
+
+  return (
+    <ListGroup className='dark'>
+      {blogs.map(blog =>
+        <ListGroupItem className='light-dark' key={blog.id}>
+          <Link className='link' to={`/blogs/${blog.id}`}>{blog.title}</Link>
+        </ListGroupItem>
+      )}
+    </ListGroup>
   )
 }

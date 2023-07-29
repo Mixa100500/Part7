@@ -1,6 +1,7 @@
 import { useQuery } from 'react-query'
 import usersService from '../../services/users'
 import { Link } from 'react-router-dom'
+import { Table } from 'react-bootstrap'
 export const Users = () => {
 
   const usersQuery = useQuery('users', usersService.getAll, {
@@ -19,23 +20,24 @@ export const Users = () => {
   return (
     <div>
       <h2>Users</h2>
-      <table>
+      <Table striped>
         <thead>
           <tr>
             <th>
+              usernames
             </th>
             <th>blogs Created</th>
           </tr>
         </thead>
         <tbody>
-          {users.map(a => (
+          {users.map(a =>
             <tr key={a.id}>
               <td><Link to={`/users/${a.id}`}>{a.name}</Link></td>
               <td>{a.blogs.length}</td>
             </tr>
-          ))}
+          )}
         </tbody>
-      </table>
+      </Table>
     </div>
   )
 }

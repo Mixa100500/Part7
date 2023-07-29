@@ -1,5 +1,6 @@
 import { useMutation, useQueryClient } from 'react-query'
 import blogService from '../../services/blogs'
+import { useParams } from 'react-router-dom'
 
 export const useNewBlogMutation = () => {
   const queryClient = useQueryClient()
@@ -36,11 +37,12 @@ export const useUpdateBlogMutation = () => {
 
 export const useDeleteBlogMutation = () => {
   const queryClient = useQueryClient()
+  const id = useParams()
 
   return useMutation(blogService.remove, {
-    onSuccess: ({ id }) => {
-      const blogs = queryClient.getQueryData('blog')
-      queryClient.setQueriesData('blogs',
+    onSuccess: () => {
+      const blogs = queryClient.getQueryData('blogs')
+      queryClient.setQueryData('blogs',
         blogs.filter(b => b.id !== id)
       )
     }

@@ -21,13 +21,13 @@ const App = () => {
   const loadUser = useLoadUser()
   const clearUser = useClearUser()
   const notifyWith = useNotifyWith()
-
   const blogsQuery = useQuery('blogs', blogService.getAll, {
     refetchOnWindowFocus: false
   })
 
   useEffect(() => {
     loadUser()
+    document.body.className = 'theme'
   }, [])
 
   if (blogsQuery.status === 'loading') {
@@ -50,41 +50,65 @@ const App = () => {
 
   const blogs = blogsQuery.data
 
-  const padding = {
-    padding: 5
-  }
 
-  const navBar = {
-    backgroundColor: 'lightgrey',
-    padding: 5
-  }
 
   const logout = e => {
     e.preventDefault()
     clearUser()
     notifyWith('logged out')
   }
+  const styleMargin = {
+    margin: 'revert'
+  }
+
+  const navBar = {
+    padding: 5,
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  }
+
+  const navLinks = {
+    display: 'flex',
+    alignItems: 'center',
+  }
+
+  const styleLinkNav = {
+    padding: 5,
+    color: 'inherit',
+    textDecoration: 'none',
+  }
 
   return (
-    <Router>
-      <div style={navBar}>
-        <Link style={padding} to={'/'}>home</Link>
-        <Link style={padding} to={'/users'}>users</Link>
-        <span>
-          {user.name} logged in <button
-            onClick={logout}>logout</button>
-        </span>
-      </div>
-      <h2>blog app</h2>
-      <Notification />
+    <div className='container dark'>
+      <Router>
+        <div style={navBar} className='light-dark'>
+          <div style={navLinks}>
+            <Link style={styleLinkNav} to={'/'}>
+              home
+            </Link>
+            <Link style={styleLinkNav} to={'/users'}>
+              users
+            </Link>
+          </div>
+          <span>
+            {user.name} logged in {' '}
+            <button onClick={logout}>
+              logout
+            </button>
+          </span>
+        </div>
+        <h2 style={styleMargin}>blog app</h2>
+        <Notification />
 
-      <Routes>
-        <Route path='/blogs/:id' element={<Blog />} />
-        <Route path='/users/:id' element={<User />} />
-        <Route path='/users' element={<Users/>} />
-        <Route path='/' element={<Home blogs={blogs} user={user}/>} />
-      </Routes>
-    </Router>
+        <Routes>
+          <Route path='/blogs/:id' element={<Blog />} />
+          <Route path='/users/:id' element={<User />} />
+          <Route path='/users' element={<Users/>} />
+          <Route path='/' element={<Home blogs={blogs} user={user}/>} />
+        </Routes>
+      </Router>
+    </div>
   )
 }
 export default App

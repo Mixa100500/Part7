@@ -1,0 +1,57 @@
+:root {
+  /* Dark color scheme */
+  --primary-color: #ffffff;
+  --secondary-color: #6c757d;
+  --background-color: #343a40;
+  --text-color: #f8f9fa;
+}
+
+.dark {
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
+
+.light-dark {
+  background-color: var(--secondary-color);
+  color: var(--text-color);
+}
+
+body {
+  /* Apply the dark theme to the body element */
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
+
+header {
+  /* Style the header element with the dark theme colors */
+  background-color: var(--primary-color);
+  color: var(--text-color);
+  padding: 1rem;
+  text-align: center;
+}
+
+main {
+  /* Style the main content with the dark theme colors */
+  padding: 2rem;
+}
+
+p {
+  /* Style paragraphs with the dark theme colors */
+  color: var(--text-color);
+}
+
+/* Style links in the navbar */
+.navbar-link {
+  color: var(--primary-color);
+  text-decoration: none;
+}
+
+.navbar-link:hover {
+  color: var(--secondary-color);
+}
+
+.link {
+  padding: 5;
+  color: inherit;
+  text-decoration: none;
+}
