@@ -3,7 +3,7 @@ import commentsService from '../services/comments'
 import { useParams } from 'react-router-dom'
 import { CommentBlogForm } from './CommentBlogForm'
 
-const CommentsList = () => {
+const Comments = () => {
   const { id } = useParams()
   let commentsQuery = useQuery( 'comments',
     () => commentsService.getCommentsOfBlog(id), {
@@ -22,6 +22,7 @@ const CommentsList = () => {
 
   return (
     <>
+      <hr className='new1'></hr>
       <h3>comments</h3>
       <CommentBlogForm blogId={id} />
       <ul>
@@ -35,4 +36,4 @@ const CommentsList = () => {
   )
 }
 
-export default CommentsList
+export default Comments

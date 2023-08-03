@@ -7,13 +7,16 @@ import { NotifyContextProvider } from './contexts/NotificationContext'
 import { UserContextProvider } from './contexts/UserContext'
 import './index.css'
 import './dark-theme.css'
+import { BrowserRouter as Router, } from 'react-router-dom'
 
 const queryClient = new QueryClient()
 ReactDOM.createRoot(document.getElementById('root')).render(
   <QueryClientProvider client={queryClient}>
     <NotifyContextProvider>
       <UserContextProvider>
-        <App />
+        <Router>
+          <App />
+        </Router>
       </UserContextProvider>
     </NotifyContextProvider>
   </QueryClientProvider>

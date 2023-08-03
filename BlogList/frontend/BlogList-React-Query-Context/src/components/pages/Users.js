@@ -20,7 +20,7 @@ export const Users = () => {
   return (
     <div>
       <h2>Users</h2>
-      <Table striped>
+      <Table striped variant='dark' bordered>
         <thead>
           <tr>
             <th>

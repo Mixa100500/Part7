@@ -5,7 +5,6 @@ export const useLogin = () => {
   const notifyWith = useNotifyWith()
   const errorWith = useErrorWith()
   const loginUserRequest = useLoginUserRequest()
-
   const login = async ({ username, password }) => {
 
     try {

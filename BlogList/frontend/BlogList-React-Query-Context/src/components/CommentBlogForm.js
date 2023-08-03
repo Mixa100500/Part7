@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useCreateComment } from '../hooks/CommentButton'
+import { Form } from 'react-bootstrap'
 
 export const CommentBlogForm = ({ blogId }) => {
   const [content, setContent] = useState('')
@@ -19,15 +20,16 @@ export const CommentBlogForm = ({ blogId }) => {
 
   return (
     <div style={styleContianer}>
-      <form onSubmit={addComment}>
-        <input
+      <Form onSubmit={addComment}>
+        <Form.Control
+          className='dark'
           value={content}
           onChange={({ target }) => setContent(target.value)}
           type='text'
           placeholder='comment of the blog'
         />
         <button>add comment</button>
-      </form>
+      </Form>
     </div>
   )
 }
