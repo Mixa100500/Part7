@@ -37,7 +37,7 @@ export const useUpdateBlogMutation = () => {
 
 export const useDeleteBlogMutation = () => {
   const queryClient = useQueryClient()
-  const id = useParams()
+  const id = useParams().id
 
   return useMutation(blogService.remove, {
     onSuccess: () => {

@@ -2,6 +2,7 @@ import { useQuery } from 'react-query'
 import commentsService from '../services/comments'
 import { useParams } from 'react-router-dom'
 import { CommentBlogForm } from './CommentBlogForm'
+import { ListGroup } from 'react-bootstrap'
 
 const Comments = () => {
   const { id } = useParams()
@@ -25,13 +26,13 @@ const Comments = () => {
       <hr className='new1'></hr>
       <h3>comments</h3>
       <CommentBlogForm blogId={id} />
-      <ul>
+      <ListGroup >
         {comments.map(c =>
-          <li key={c.id}>
+          <ListGroup.Item className='dark' key={c.id}>
             {c.content}
-          </li>
+          </ListGroup.Item>
         )}
-      </ul>
+      </ListGroup>
     </>
   )
 }

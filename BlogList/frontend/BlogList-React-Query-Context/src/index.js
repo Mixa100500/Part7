@@ -5,7 +5,6 @@ import { QueryClient, QueryClientProvider } from 'react-query'
 import App from './App'
 import { NotifyContextProvider } from './contexts/NotificationContext'
 import { UserContextProvider } from './contexts/UserContext'
-import './index.css'
 import './dark-theme.css'
 import { BrowserRouter as Router, } from 'react-router-dom'
 

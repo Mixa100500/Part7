@@ -25,7 +25,6 @@ const App = () => {
 
   useEffect(() => {
     loadUser()
-    document.body.className = 'theme'
   }, [])
 
   if (blogsQuery.status === 'loading') {
@@ -60,6 +59,7 @@ const App = () => {
         <Route path='/users' element={<Users/>} />
         <Route path='/' element={<Home blogs={blogs} user={user}/>} />
       </Routes>
+      <hr className='new1'></hr>
     </div>
   )
 }

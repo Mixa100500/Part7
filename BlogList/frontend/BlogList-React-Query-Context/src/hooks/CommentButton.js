@@ -8,7 +8,7 @@ export const useCreateComment = () => {
 
   return async (comment) => {
     try {
-      createMutation.mutate(comment)
+      await createMutation.mutateAsync(comment)
       notithyWith(`A new comment: ${comment.content} added`)
     } catch (error) {
       errorWith(`Error creating comment: ${error}`)

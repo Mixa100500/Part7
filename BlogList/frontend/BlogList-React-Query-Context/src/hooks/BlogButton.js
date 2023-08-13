@@ -1,15 +1,23 @@
+import { useNavigate } from 'react-router-dom'
 import { useErrorWith, useNotifyWith } from '../contexts/NotificationContext'
 import { useDeleteBlogMutation, useNewBlogMutation, useUpdateBlogMutation } from './queryMutation/BlogMutation'
 
 export const useRemoveBlog = () => {
   const notifyWith = useNotifyWith()
   const deleteBlogMutation = useDeleteBlogMutation()
+  const errorWith = useErrorWith()
+  const navigate = useNavigate()
 
   const remove = async (blog) => {
-    const ok = window.confirm(`Sure you want to remove '${blog.title}' by ${blog.author}`)
-    if(ok) {
-      deleteBlogMutation.mutate(blog)
-      notifyWith(`The blog ${blog.title} by ${blog.author} removed`)
+    try {
+      const ok = window.confirm(`Sure you want to remove '${blog.title}' by ${blog.author}`)
+      if(ok) {
+        await deleteBlogMutation.mutateAsync(blog)
+        notifyWith(`The blog ${blog.title} by ${blog.author} removed`)
+        navigate('/')
+      }
+    } catch (error) {
+      errorWith(`The blog ${blog.title} by ${blog.author} has not been removed Error: ${error}`)
     }
   }
   return remove
@@ -20,9 +28,9 @@ export const useCreateBlog = (blogFormRef) => {
   const notifyWith = useNotifyWith()
   const errorWith = useErrorWith()
 
-  const createBlog = (blog) => {
+  const createBlog = async (blog) => {
     try {
-      newBlogMutation.mutate(blog)
+      await newBlogMutation.mutateAsync(blog)
       blogFormRef.current.toggleVisiblity()
       notifyWith(`a new blog ${blog.title} ${blog.author} added`)
 
@@ -46,7 +54,7 @@ export const useLikeBlog = () => {
         likes: blog.likes + 1,
         user: blog.user.id
       }
-      updateBlogMutation.mutate(blogToUpdate)
+      await updateBlogMutation.mutateAsync(blogToUpdate)
       notifyWith(`The blog: ${blog.title} liked`)
     } catch (error) {
       errorWith(error)
