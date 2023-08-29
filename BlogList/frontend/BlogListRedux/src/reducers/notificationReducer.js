@@ -1,47 +1,42 @@
 const initialState = {
-  message: '',
-  type: 'info',
+  notifications: []
+}
+
+const types = {
+  ADD_NOTIFICATION: 'ADD_NOTIFICATION',
+  REMOVE_NOTIFICATION: 'REMOVE_NOTIFICATION'
 }
 
 const notificationReducer = (state = initialState, action) => {
   switch (action.type) {
-    case 'SET_ERROR':
+    case types.ADD_NOTIFICATION: {
       return {
-        message: action.payload,
-        type: 'error',
+        ...state,
+        notifications: [ ...state.notifications,  action.payload ]
       }
-    case 'SET_NOTIFY':
+    }
+    case types.REMOVE_NOTIFICATION: {
       return {
-        message: action.payload,
-        type: 'info',
+        ...state,
+        notifications: state.notifications.filter(a => a.id !== action.payload)
       }
-    case 'CLEAR_NOTIFICATION':
-      return {
-        message: '',
-        type: 'info',
-      }
+    }
     default:
       return state
   }
 }
 
-export const setNotification = (message) => {
+export const addNotification = (obj) => {
   return {
-    type: 'SET_NOTIFY',
-    payload: message,
+    type: types.ADD_NOTIFICATION,
+    payload: obj,
   }
 }
 
-export const setError = (message) => {
+export const removeNotification = (id) => {
   return {
-    type: 'SET_ERROR',
-    payload: message,
-  }
-}
-
-export const clearNotification = () => {
-  return {
-    type: 'CLEAR_NOTIFICATION',
+    type: types.REMOVE_NOTIFICATION,
+    payload: id,
   }
 }
 

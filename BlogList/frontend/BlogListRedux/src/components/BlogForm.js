@@ -1,16 +1,17 @@
-import { useState } from 'react'
+import { useField } from '../hooks/button/Field'
+import { Box, Button, Divider, TextField, Typography } from '@mui/material'
 
 const BlogForm = ({ createBlog }) => {
-  const [title, setTitle] = useState('')
-  const [author, setAuthor] = useState('')
-  const [url, setUrl] = useState('')
+  const [titleField, setTitle] = useField('text')
+  const [authorField, setAuthor] = useField('text')
+  const [urlField, setUrl] = useField('text')
 
   const addBlog = (event) => {
     event.preventDefault()
     createBlog({
-      title,
-      author,
-      url,
+      title: titleField.value,
+      author: authorField.value,
+      url: urlField.value,
     })
     setTitle('')
     setAuthor('')
@@ -18,43 +19,63 @@ const BlogForm = ({ createBlog }) => {
   }
 
   return (
-    <div>
-      <h2>create new</h2>
-
-      <form onSubmit={addBlog}>
-        <div>
-        title:
-          <input
+    <>
+      <Divider />
+      <Box
+        component='div'
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center'
+        }}
+      >
+        <Typography
+          sx={{ mt: 2 }}
+          component='h2'
+          variant='h5'
+        >
+          create new
+        </Typography>
+        <Box
+          sx={{ mt: 1 }}
+          component='form'
+          onSubmit={addBlog}
+        >
+          <TextField
             id='title'
-            onChange={({ target }) => setTitle(target.value)}
-            placeholder='title of the blog'
-            type="text"
-            value={title}
+            fullWidth
+            label='Title'
+            {...titleField}
+            required
           />
-        </div>
-        <div>
-        author:
-          <input
-            onChange={({ target }) => setAuthor(target.value)}
-            placeholder='author of the blog'
+          <TextField
+            sx={{ mt: 2 }}
+            label='Author'
+            fullWidth
             id='author'
-            type="text"
-            value={author}
+            {...authorField}
           />
-        </div>
-        <div>
-        url:
-          <input
+          <TextField
+            sx={{ mt: 2 }}
+            fullWidth
             id='url'
-            onChange={({ target }) => setUrl(target.value)}
-            placeholder='url of the blog'
-            type="text"
-            value={url}
+            label='url of the blog'
+            {...urlField}
+            required
           />
-        </div>
-        <button id='create-butto' type='submit'>send</button>
-      </form>
-    </div>
+          <Button
+            id='create-button'
+            type='submit'
+            fullWidth
+            color='inherit'
+            variant='outlined'
+            sx={{ mt: 3, mb: 2 }}
+          >
+            send
+          </Button>
+        </Box>
+      </Box>
+    </>
   )
 }
 

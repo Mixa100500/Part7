@@ -1,14 +1,21 @@
+const types = {
+  SET_BLOGS: 'SET_BLOGS',
+  ADD_BLOGS: 'ADD_BLOGS',
+  DELETE_BLOG:'DELETE_BLOG',
+  UPDATE_BLOG:'UPDATE_BLOG',
+}
+
 const blogsReducer = (state = [], action) => {
   switch (action.type) {
-    case 'SET_BLOGS':
-      return action.payload.sort(compareLikes)
-    case 'ADD_BLOGS':
+    case types.SET_BLOGS:
+      return action.payload
+    case types.ADD_BLOGS:
       return state.concat(action.payload)
-    case 'DELETE_BLOG': {
+    case types.DELETE_BLOG: {
       const id = action.payload.id
       return state.filter(a => a.id !== id)
     }
-    case 'UPDATE_BLOG': {
+    case types.UPDATE_BLOG: {
       const id = action.payload.id
       const newBlogs = state.map(b => b.id === id ?
         action.payload :
@@ -29,7 +36,7 @@ const compareLikes = (a, b) => {
 
 export const deleteBlog = (blog) => {
   return{
-    type: 'DELETE_BLOG',
+    type: types.DELETE_BLOG,
     payload: blog
   }
 }
@@ -37,21 +44,21 @@ export const deleteBlog = (blog) => {
 
 export const updateBlog = (blog) => {
   return {
-    type: 'UPDATE_BLOG',
+    type: types.UPDATE_BLOG,
     payload: blog,
   }
 }
 
 export const initializeBlogs = (blogs) => {
   return {
-    type: 'SET_BLOGS',
+    type: types.SET_BLOGS,
     payload: blogs,
   }
 }
 
 export const addBlog = (blog) => {
   return {
-    type: 'ADD_BLOGS',
+    type: types.ADD_BLOGS,
     payload: blog,
   }
 }

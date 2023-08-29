@@ -1,18 +1,26 @@
 import { useDispatch } from 'react-redux'
 import blogService from '../services/blogs'
 import { addBlog, deleteBlog, updateBlog } from '../reducers/blogsReducer'
-import { clearNotification, setError, setNotification } from '../reducers/notificationReducer'
+import { removeNotification, addNotification } from '../reducers/notificationReducer'
 import { useRef } from 'react'
 import storageService from '../services/storage'
 import { clearUser, setUser } from '../reducers/userReducer'
 import loginService from '../services/login'
+import { useNavigate } from 'react-router-dom'
 
 export const useNotyfy = () => {
   const dispatch = useDispatch()
-  return (message) => {
-    dispatch(setNotification(message))
+
+  return (message, isError = false) => {
+
+    const notification = {
+      id: Date.now(),
+      message,
+      isError
+    }
+    dispatch(addNotification(notification))
     setTimeout(() => {
-      dispatch(clearNotification())
+      dispatch(removeNotification(notification.id))
     }, 3000)
   }
 }
@@ -31,15 +39,21 @@ export const useLogout = () => {
 export const useRemove = () => {
   const dispatch = useDispatch()
   const notifyWith = useNotyfy()
+  const navigate = useNavigate()
 
   return async (blog) => {
     const ok = window.confirm(
       `Sure you want to remove '${blog.title}' by ${blog.author}`
     )
-    if (ok) {
-      await blogService.remove(blog)
-      notifyWith(`The blog ${blog.title} by ${blog.author} removed`)
-      dispatch(deleteBlog(blog))
+    try {
+      if (ok) {
+        navigate('/')
+        await blogService.remove(blog)
+        notifyWith(`The blog ${blog.title} by ${blog.author} removed`)
+        dispatch(deleteBlog(blog))
+      }
+    } catch (err) {
+      notifyWith(`The blog "${blog.title}" has not been deleted because: '${err}'`, true)
     }
   }
 }
@@ -47,7 +61,7 @@ export const useRemove = () => {
 
 export const useLike = () => {
   const dispatch = useDispatch()
-  const errorWith = useError()
+  const notifyWith = useNotyfy()
 
   return async (blog) => {
     try {
@@ -58,8 +72,9 @@ export const useLike = () => {
       }
       const updatedBlog = await blogService.update(blogToUpdate)
       dispatch(updateBlog(updatedBlog))
+      notifyWith(`The '${blog.title}' blog has been liked`)
     } catch (error) {
-      errorWith(error)
+      notifyWith(`Blog liking error: ${error}`, true)
     }
   }
 }
@@ -67,7 +82,6 @@ export const useLike = () => {
 export const useLogin = () => {
   const dispatch = useDispatch()
   const notifyWith = useNotyfy()
-  const errorWith = useError()
 
   return  async ({ username, password }) => {
     try {
@@ -79,25 +93,14 @@ export const useLogin = () => {
       dispatch(setUser(user))
       notifyWith(`login ${username}`)
     } catch (error) {
-      errorWith('wrong username or password')
+      notifyWith('wrong username or password', true)
     }
   }
 }
 
-export const useError = () => {
-  const dispatch = useDispatch()
-
-  return (message) => {
-    dispatch(setError(message))
-    setTimeout(() => {
-      dispatch(clearNotification())
-    }, 3000)
-  }
-}
 
 export const useCreateBlog = () => {
   const dispatch = useDispatch()
-  const errorWith = useError()
   const notifyWith = useNotyfy()
   const blogFormRef = useRef()
 
@@ -106,10 +109,9 @@ export const useCreateBlog = () => {
       const newBlog = await blogService.create(blog)
       blogFormRef.current.toggleVisiblity()
       notifyWith(`a new blog ${blog.title} ${blog.author} added`)
-
       dispatch(addBlog(newBlog))
     } catch (error) {
-      errorWith(error)
+      notifyWith(`A new blog '${blog.title}' has not been added because: ${error}`, true)
     }
   }
 

@@ -1,58 +1,66 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import blogService from './services/blogs'
 import storageService from './services/storage'
 
-import BlogForm from './components/BlogForm'
-import Togglable from './components/Togglable'
 import Notification from './components/Notification'
 import LoginForm from './components/LoginFrom'
-
 import { useDispatch, useSelector } from 'react-redux'
-import { initializeBlogs, } from './reducers/blogsReducer'
+import { initializeBlogs } from './reducers/blogsReducer'
 import { setUser } from './reducers/userReducer'
-import { useCreateBlog, useLogout, } from './hooks'
-import { Blogs } from './components/Blogs'
+
+import { Route, Routes } from 'react-router-dom'
+import { Home } from './components/page/Home'
+import { Users } from './components/page/Users'
+import { User } from './components/page/User'
+import Blog from './components/page/Blog'
+import { Container } from '@mui/material'
+import { NavBar } from './components/NavBar'
 
 const App = () => {
   const dispatch = useDispatch()
-  const user = useSelector(state => state.user)
-  const [createBlog, blogFormRef] = useCreateBlog()
-  const logout = useLogout()
+  const user = useSelector((state) => state.user)
+  const [userFetched, setUserFetched] = useState(false)
 
   useEffect(() => {
-    blogService
-      .getAll()
-      .then((blogs) => dispatch(initializeBlogs(blogs)))
+    blogService.getAll().then(blogs => dispatch(initializeBlogs(blogs)))
   }, [])
 
   useEffect(() => {
     const user = storageService.loadUser()
     dispatch(setUser(user))
+    setUserFetched(true)
   }, [])
+
+  if(!userFetched) {
+    return null
+  }
 
   if (!user) {
     return (
       <>
-        <h2>Log in to application</h2>
-        <Notification />
-        <LoginForm />
+        <Container component='main' maxWidth='xs'>
+          <Notification />
+          <LoginForm />
+        </Container>
       </>
     )
   }
 
+
   return (
-    <div>
-      <h2>blogs</h2>
-      <Notification  />
+    <Container>
       <div>
-        {user.name} logged in
-        <button onClick={logout}>logout</button>
+        <NavBar />
+        <h2>blogs</h2>
+        <Notification />
+        <Routes>
+          <Route path="/users/:id" element={<User />} />
+          <Route path="/users" element={<Users />} />
+          <Route path="/blogs/:id" element={<Blog />} />
+          <Route path="/" element={<Home />} />
+        </Routes>
       </div>
-      <Togglable buttonLabel="create a new Blog" ref={blogFormRef}>
-        <BlogForm createBlog={createBlog} />
-      </Togglable>
-      <Blogs />
-    </div>
+    </Container>
   )
 }
 
