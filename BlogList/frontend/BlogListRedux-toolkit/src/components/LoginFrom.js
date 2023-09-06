@@ -1,6 +1,15 @@
 import { useState } from 'react'
+import { useLogin } from '../button'
+import { styled } from 'styled-components'
+import { Button } from './Button'
 
-const LoginForm = ({ login }) => {
+const Input = styled.input`
+  margin: 0.25em;
+`
+
+const LoginForm = () => {
+
+  const login = useLogin()
   const [password, setPassword] = useState('secret')
   const [username, setUsername] = useState('root')
 
@@ -14,7 +23,7 @@ const LoginForm = ({ login }) => {
     <form id='loginForm' onSubmit={handleSumbit}>
       <div>
         username
-        <input
+        <Input
           id='username'
           value={username}
           onChange={({ target }) => setUsername(target.value)}
@@ -22,14 +31,14 @@ const LoginForm = ({ login }) => {
       </div>
       <div>
         password
-        <input
+        <Input
           id='password'
           value={password}
           onChange={({ target }) => setPassword(target.value)}
         />
-        <button type='submit' id='login-button'>
+        <Button type='submit' id='login-button'>
           login
-        </button>
+        </Button>
       </div>
     </form>
   )

@@ -26,4 +26,15 @@ const remove = async (blog) => {
   return response.data
 }
 
-export default { getAll, create, update, remove }
+const getOne = async () => {
+  const response = await axios.get(baseUrl)
+  return response.data
+}
+
+export default {
+  getAll,
+  create,
+  update,
+  remove,
+  getOne
+}

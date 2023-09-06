@@ -6,6 +6,9 @@ const userSlice = createSlice({
   name: 'user',
   initialState: null,
   reducers: {
+    initalizeUser(state, action) {
+      return action.payload
+    },
     setUser(state, action) {
       return action.payload
     },
@@ -23,6 +26,11 @@ export const loginAndSeveUser = (username, password) => async dispatch => {
     password,
   })
   storageService.saveUser(user)
+  dispatch(setUser(user))
+}
+
+export const loadUser = () => async dispatch => {
+  const user = storageService.loadUser()
   dispatch(setUser(user))
 }
 
