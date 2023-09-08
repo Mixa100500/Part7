@@ -5,5 +5,6 @@
 <li><a href='https://fullstackopen.com/en/part7/custom_hooks'>Custom hooks</a></li>
 <li><a href='https://fullstackopen.com/en/part7/more_about_styles'>More about styles</a></li>
 <li><a href='https://fullstackopen.com/en/part7/webpack'>Webpack</a></li>
-<li><a href='https://fullstackopen.com/en/part7/class_components_miscellaneous'>Exercises: extending the bloglist</a></li>
+<li><a href='https://fullstackopen.com/en/part7/class_components_miscellaneous'>Class components, Miscellaneous</a></li>
+<li><a href='https://fullstackopen.com/en/part7/exercises_extending_the_bloglist'>Exercises: extending the bloglist</a></li>
 </ul>
