@@ -82,7 +82,7 @@ const App = () => {
 
   useEffect(() => {
     dispatch(initialBlogsAction())
-  }, [dispatch])
+  }, [])
 
   useEffect(() => {
     setUserFetched(true)
