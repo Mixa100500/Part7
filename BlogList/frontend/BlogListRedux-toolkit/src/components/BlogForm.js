@@ -1,6 +1,5 @@
-import { useState } from 'react'
 import { styled } from 'styled-components'
-
+import { useField } from '../hooks'
 
 const FormContainer = styled.div`
   padding: 1em;
@@ -60,23 +59,22 @@ const SubmitButton = styled.button`
 `
 
 const BlogForm = ({ createBlog }) => {
-  const [title, setTitle] = useState('')
-  const [author, setAuthor] = useState('')
-  const [url, setUrl] = useState('')
+  const [titleField, setTitle] = useField('text', 'title')
+  const [authorField, setAuthor] = useField('text', 'author')
+  const [urlField, setUrl] = useField('text', 'url')
 
   const addBlog = (event) => {
     event.preventDefault()
     createBlog({
-      title,
-      author,
-      url,
+      title: titleField.value,
+      author: authorField.value,
+      url: urlField.value,
     })
+
     setTitle('')
     setAuthor('')
     setUrl('')
   }
-
-
 
   return (
     <FormContainer>
@@ -85,31 +83,19 @@ const BlogForm = ({ createBlog }) => {
         <GridRow>
           <Label htmlFor="title">title:</Label>
           <Input
-            id="title"
-            onChange={({ target }) => setTitle(target.value)}
-            placeholder="title"
-            type="text"
-            value={title}
+            {...titleField}
           />
         </GridRow>
         <GridRow>
           <Label htmlFor="author">author:</Label>
           <Input
-            onChange={({ target }) => setAuthor(target.value)}
-            placeholder="author"
-            id="author"
-            type="text"
-            value={author}
+            {...authorField}
           />
         </GridRow>
         <GridRow>
           <Label htmlFor="url">url:</Label>
           <Input
-            id="url"
-            onChange={({ target }) => setUrl(target.value)}
-            placeholder="url"
-            type="text"
-            value={url}
+            {...urlField}
           />
         </GridRow>
         <SubmitButton type="submit">send</SubmitButton>

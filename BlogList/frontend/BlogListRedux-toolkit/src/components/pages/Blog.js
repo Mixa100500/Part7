@@ -1,10 +1,8 @@
 import { styled } from 'styled-components'
 import { Button } from '../Button'
 import { useSelector } from 'react-redux'
-import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import blogService from '../../services/blogs'
-import { useLike, useRemove } from '../../button'
+import { useLike, useRemove } from '../../hooks'
 import { Comments } from '../Comments'
 
 const BlogCard = styled.div`
@@ -29,19 +27,19 @@ export const Blog = () => {
   const blogs = useSelector(state => state.blogs)
   const id = useParams().id
   const user = useSelector(state => state.user)
-  const savedBlog = blogs.find(blog => blog.id === id)
-  const [blog, setBlog] = useState(savedBlog)
+  const blog = blogs.find(blog => blog.id === id)
 
-  useEffect(() => {
-    if(!blog) {
-      blogService.getOne()
-        .then(blog => setBlog(blog))
-    }
-  }, [])
 
   if(!blog) {
     return null
   }
+
+  if(!user) {
+    return <div>
+      loading data...
+    </div>
+  }
+
   const canRemove = blog.user.username === user.username
 
   return (<>
@@ -51,10 +49,10 @@ export const Blog = () => {
         <div><a href={blog.url}>{blog.url}</a></div>
         <div>
           likes {blog.likes}
-          <Button onClick={like} >like</Button>
+          <Button onClick={() => like(blog)} >like</Button>
         </div>
         <div>added by: {blog.author}</div>
-        {canRemove &&<Button onClick={remove}>
+        {canRemove &&<Button onClick={() => remove(blog)}>
           delete
         </Button>}
       </BlogContent>

@@ -27,28 +27,28 @@ const compareLikes = (a, b) => {
   return b.likes - a.likes
 }
 
-export const initialBlogs = () => {
+export const initialBlogsAction = () => {
   return async dispatch => {
     const blogs = await blogService.getAll()
     dispatch(setBlogs(blogs))
   }
 }
 
-export const createBlog = (blog) => {
+export const createBlogAction = (blog) => {
   return async dispatch => {
     const newBlog = await blogService.create(blog)
     dispatch(addBlog(newBlog))
   }
 }
 
-export const removeBlog = (blog) => {
+export const removeBlogAction = (blog) => {
   return async dispatch => {
-    const deletedBlog = await blogService.remove(blog)
-    dispatch(deleteBlog(deletedBlog))
+    await blogService.remove(blog)
+    dispatch(deleteBlog(blog))
   }
 }
 
-export const likeBlog = blog => {
+export const likeBlogAction = blog => {
   return async dispatch => {
     const likedBlog = {
       ...blog,
@@ -58,6 +58,7 @@ export const likeBlog = blog => {
     dispatch(addLike(newBlog))
   }
 }
+
 
 export const { addBlog, deleteBlog, setBlogs, addLike } = blogsSlice.actions
 

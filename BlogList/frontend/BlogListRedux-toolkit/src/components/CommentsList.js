@@ -17,15 +17,18 @@ const CommentText = styled.p`
   margin: 0;
 `
 
-
 export const CommentList = ({ comments }) => {
 
   return (
     <CommentListContainer>
       <h3>Comments</h3>
-      {comments.map(comment => <Comment key={comment.id}>
-        <CommentText>{comment.content}</CommentText>
-      </Comment>)}
+      {comments.length === 0 ? <span>
+        There are no comments yet.
+      </span> :
+        comments.map(comment => <Comment key={comment.id}>
+          <CommentText>{comment.content}</CommentText>
+        </Comment>)
+      }
     </CommentListContainer>
   )
 }

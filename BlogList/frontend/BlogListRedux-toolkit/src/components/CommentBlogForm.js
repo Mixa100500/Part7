@@ -1,7 +1,7 @@
-import { useState } from 'react'
 import commetService from '../services/comments'
 import { useParams } from 'react-router-dom'
 import { styled } from 'styled-components'
+import { useField } from '../hooks'
 
 const CommentFormContainer = styled.div`
   background: papayawhip;
@@ -32,22 +32,13 @@ const CommentButton = styled.button`
   cursor: pointer;
 `
 
-const useFiled = (type, initialValue = '') => {
-  const [value, setValue] = useState(initialValue)
-  const onChange = (event) => {
-    event.preventDefault()
-    setValue(event.target.value)
-  }
-  return [{ value, type, onChange }, setValue]
-}
-
 export const CommentBlogForm = ({ setComments }) => {
   const id = useParams().id
-  const [field, setValue] = useFiled('text')
+  const [field, setValue] = useField('text', 'content')
 
-  const onSubmit = event => {
+  const onSubmit = async event => {
     event.preventDefault()
-    const comment = commetService.create(id, field.value)
+    const comment = await commetService.create(id, field.value)
     setValue('')
     setComments(prevState => prevState.concat(comment))
   }

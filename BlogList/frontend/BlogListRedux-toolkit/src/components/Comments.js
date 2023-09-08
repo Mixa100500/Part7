@@ -9,7 +9,7 @@ export const Comments = () => {
   const [comments, setComments] = useState([])
 
   useEffect(() => {
-    commentService.getOne(id)
+    commentService.getAll(id)
       .then(res => setComments(res))
   }, [])
 

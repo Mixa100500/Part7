@@ -20,11 +20,8 @@ const userSlice = createSlice({
 
 export const { setUser, clearUser } = userSlice.actions
 
-export const loginAndSeveUser = (username, password) => async dispatch => {
-  const user = await loginService.login({
-    username,
-    password,
-  })
+export const loginAndSaveUser = (date) => async dispatch => {
+  const user = await loginService.login(date)
   storageService.saveUser(user)
   dispatch(setUser(user))
 }
