@@ -52,7 +52,6 @@ export const useLikeBlog = () => {
       const blogToUpdate = {
         ...blog,
         likes: blog.likes + 1,
-        user: blog.user.id
       }
       await updateBlogMutation.mutateAsync(blogToUpdate)
       notifyWith(`The blog: ${blog.title} liked`)
