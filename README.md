@@ -1,28 +1,10 @@
-<p>The application will be accessible at http://localhost:3000.</p>
-<h2>About Client</h2>
-<p>This app has three frontend options:</p>
+<h2><a href='https://fullstackopen.com/en/part7'>Part7</a></h2>
+<p>Part 7 of the course covers a few different topics. First, we are introduced to the React router. The React router allows you to split your application into different views that are displayed based on the URL in the browser's address bar. After that, we looked at a few more ways to add CSS styles to React applications. Throughout the course, we used Vite to generate the body of our apps. It's also possible to customize the whle toolchain yourself, and in this part we looked at how to do that using a tool called Webpack. We also looked at hook functions and how to define a custom hook.</p>
 <ul>
-  <li>Redux + Material UI</li>
-  <li>Redux-toolkit + styled-components</li>
-  <li>React-Query + Context + react-bootstrap</li>
-</ul>
-<h2>Usage</h2>
-<p>After installing and running the application, you can:</p>
-<ul>
-  <li>Create new homework assignments.</li>
-  <li>Organize assignments by course module or topic.</li>
-  <li>Add descriptions and additional resources to assignments.</li>
-  <li>Track your progress throughout the FullStackOpen.com course.</li>
-</ul>
-
-<h2>Technologies Used</h2>
-
-<p>This application is built using the following technologies:<p></p>
-<ul>
-  <li>React.js</li>
-  <li>Node.js</li>
-  <li>Express.js</li>
-  <li>MongoDB</li>
-  <li>Redux</li>
-  <li>HTML/CSS</li>
+<li><a href='https://fullstackopen.com/en/part7/react_router'>React Router</a></li>
+<li><a href='https://fullstackopen.com/en/part7/custom_hooks'>Custom hooks</a></li>
+<li><a href='https://fullstackopen.com/en/part7/more_about_styles'>More about styles</a></li>
+<li><a href='https://fullstackopen.com/en/part7/webpack'>Webpack</a></li>
+<li><a href='https://fullstackopen.com/en/part7/class_components_miscellaneous'>Class components, Miscellaneous</a></li>
+<li><a href='https://fullstackopen.com/en/part7/exercises_extending_the_bloglist'>Exercises: extending the bloglist</a></li>
 </ul>
